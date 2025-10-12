@@ -1,3 +1,41 @@
 from django.db import models
+from accounts.models import Profile
 
 # Create your models here.
+class Message(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    message = models.CharField(max_length=300)
+    send_time = models.DateTimeField(auto_now_add=True)
+
+class Group(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    registration = models.DateTimeField(auto_now=True)
+    creator = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+class GroupMember(models.Model):
+    STATUS_CHOICES = (
+        ('admin', 'Admin'),
+        ('member', 'Member'),
+        ('banned', 'Banned'),
+    )
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    status = models.CharField(max_length=50,choices=STATUS_CHOICES, default='member')
+
+class Chat(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    user1 = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    user1 = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    last_message = models.ForeignKey(Message, on_delete=models.CASCADE)
+
+class Chat_message(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    message = models.CharField(max_length=300)
+    send_time = models.DateTimeField(auto_now_add=True)
+
+class Blocked(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, blank = True)
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, blank = True)
