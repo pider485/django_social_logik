@@ -39,3 +39,9 @@ class Blocked(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE, blank = True)
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, blank = True)
+
+class GroupMessage(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='messages')
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

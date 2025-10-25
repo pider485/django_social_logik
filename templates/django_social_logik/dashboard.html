@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} месенджер {% endblock %}
+{% block content %}
+    
+<h1>{{ user.username }}</h1>
+<div class="row">
+    <div class="col">
+        <h2>Ваші групи:</h2>
+        <ul>
+            {% for gm in groups %}
+                <li>
+                    <a href="{% url 'group_detail' gm.group.id %}">{{ gm.group.name }}</a>
+                </li>
+            {% empty %}
+                <li>Ви не є учасником жодної групи.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %} месенджер {% endblock %}
+{% block content %}
+<div class="container text-center">
+    <div class="row">
+        <div class="col">
+            <h1>Груповий чат</h1>
+            <button type="button" class="btn btn-info">back</button>
+            <div class="row">
+                {% for msg in messages %}
+                <h4>{{ msg.user.username }} - {{ msg.content }}</h4>
+            </div>
+            {% endfor %}
+            <form method="POST" action="">
+                {% csrf_token %}
+                <textarea class="form-control" style="width: 30;" name="content" rows="3" cols="50" placeholder="Напишіть повідомлення..."></textarea><br>
+                <button type="submit">Відправити</button>
+            </form>
+        </div>
+        {% endblock %}
