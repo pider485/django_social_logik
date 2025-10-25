@@ -28,3 +28,6 @@ def group_detail(request, group_id):
             return redirect('group_detail', group_id=group.id)
     messages = GroupMessage.objects.all().filter(group=group).order_by('created_at')
     return render(request, 'django_social_logik/group_detail.html', {'group': group, 'messages': messages})
+
+def profile(request):
+    return render(request, 'django_social_logik/profile.html')

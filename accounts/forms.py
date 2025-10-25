@@ -18,7 +18,7 @@ class LoginForm(AuthenticationForm):
 class RegisterForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2']
+        fields = ['username','first_name','last_name','description','avatar','phone','email','birth_date','password1' ,'password2']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

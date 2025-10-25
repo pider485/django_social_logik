@@ -5,4 +5,5 @@ urlpatterns = [
     # Визнач тут свої URL-шляхи
     path('', views.home, name='home'),
     path('group/<int:group_id>/', views.group_detail, name='group_detail'),
+    path('profile/', views.profile, name='profile'),
 ]
