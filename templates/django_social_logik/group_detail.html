@@ -7,6 +7,13 @@
         <div class="col">
             <h1>Груповий чат</h1>
             <a href="{% url 'home' %}" class="btn btn-info">Назад</a>
+            {% for memb in groupMember %}
+            {% if memb.status == "admin" %}
+            <a href="{% url 'friend_add_to_group' %}" class="btn btn-info">Додати нову людину</a>
+
+            {% endif %}
+
+            {% endfor %}
             <div class="row">
                 {% for msg in messages %}
                 <h4>{{ msg.user.username }} - {{ msg.content }}</h4>
@@ -14,7 +21,8 @@
             {% endfor %}
             <form method="POST" action="">
                 {% csrf_token %}
-                <textarea class="form-control" style="width: 30;" name="content" rows="3" cols="50" placeholder="Напишіть повідомлення..."></textarea><br>
+                <textarea class="form-control" style="width: 30;" name="content" rows="3" cols="50"
+                    placeholder="Напишіть повідомлення..."></textarea><br>
                 <button type="submit">Відправити</button>
             </form>
         </div>

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} месенджер {% endblock %}
+{% block content %}
+<div class="col">
+
+{% for fr in freinds %}
+    {% if fr.user_1 == user %}
+    <div class="row">    
+        {{ fr.user_2.username }}
+        <button type="button" class="btn btn-success">Success</button>
+    </div>
+    {% endif %}
+    {% if fr.user_2 == user%}
+    <div class="row">
+        {{ fr.user_1.username }}
+        <button type="button" class="btn btn-success">Success</button>
+    </div>    
+    {% endif %}
+{% endfor %}
+</div>
+
+{% endblock %}

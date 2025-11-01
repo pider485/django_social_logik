@@ -11,4 +11,5 @@ urlpatterns = [
     path('add_friend/', views.add_friend, name='add_friend'),
     path('add_post/', views.add_post, name='add_post'),
     path('add_new_group/', views.add_new_group, name='add_new_group'),
+    path('friend_add_to_group/', views.friend_add_to_group, name='friend_add_to_group'),
 ]
