@@ -45,3 +45,19 @@ class GroupMessage(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+class Postest(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    img = models.ImageField(upload_to='posts/')
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class Freids(models.Model):
+    user_1 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='friend_user_1')
+    user_2 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='friend_user_2')
+
+class freind_message(models.Model):
+    freind = models.ForeignKey(Freids, on_delete=models.CASCADE, related_name='freind_messages')
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

@@ -1,12 +1,25 @@
 {% extends 'base.html' %}
 
-{% block title %} месенджер {% endblock %}
+{% block title %}
+{% if user.username == freind.user_1.username %}
+Чат з {{ freind.user_2 }}
+{% else %}
+Чат з {{ freind.user_1.username }}
+
+{% endif %}
+{% endblock %}
 {% block content %}
+<a href="{% url 'home' %}" class="btn btn-info">Назад</a>
+
+{% if user.username == freind.user_1.username %}
+Чат з {{ freind.user_2 }}
+{% else %}
+Чат з {{ freind.user_1.username }}
+{% endif %}
+
 <div class="container text-center">
     <div class="row">
         <div class="col">
-            <h1>Груповий чат</h1>
-            <a href="{% url 'home' %}" class="btn btn-info">Назад</a>
             <div class="row">
                 {% for msg in messages %}
                 <h4>{{ msg.user.username }} - {{ msg.content }}</h4>
@@ -18,4 +31,5 @@
                 <button type="submit">Відправити</button>
             </form>
         </div>
-        {% endblock %}
+
+{% endblock %}

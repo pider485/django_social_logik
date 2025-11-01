@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} da {% endblock %}
+<h1></h1>
+{% block content %}
+<a href="{% url 'home' %}" class="btn btn-info">Назад</a>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for us in profiles %}
+    <div class="card" style="width: 18rem;">
+        <img src="{{us.avatar}}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{us.username}}</h5>
+            <p class="card-text">{{us.description}}</p>
+            <a href="#" class="btn btn-primary">надіслати запрошення</a>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+{% endblock %}

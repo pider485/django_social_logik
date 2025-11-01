@@ -2,21 +2,53 @@
 
 {% block title %} месенджер {% endblock %}
 {% block content %}
-    
+
 <h1>{{ user.username }}</h1>
 <div class="row">
     <div class="col">
+        <a href="{% url 'profile' %}" class="btn btn-info">Профіль</a>
+        <a href="{% url 'add_new_group' %}" class="btn btn-info">Створити нову групу</a>
         <h2>Ваші групи:</h2>
         <ul>
             {% for gm in groups %}
-                <li>
-                    <a href="{% url 'group_detail' gm.group.id %}">{{ gm.group.name }}</a>
-                </li>
+            <li>
+                <a href="{% url 'group_detail' gm.group.id %}">{{ gm.group.name }}</a>
+            </li>
             {% empty %}
-                <li>Ви не є учасником жодної групи.</li>
+            <li>Ви не є учасником жодної групи.</li>
             {% endfor %}
         </ul>
     </div>
+    <div class="col">
+        <a href="{% url 'add_friend'%}" class="btn btn-info">Додати друга</a>
+        <h1>Список друзів</h1>
+        {% for f in freinds %}
+        {% if f.user_1 == user %}
+        <li>
+            <a href="{% url 'freind_chats' f.id %}">{{f.user_2.username }}</a>
+        </li>
+        {% else %}
+        <li>
+            <a href="{% url 'freind_chats' f.id %}">{{f.user_1.username }}</a>
+        </li>
+        {% endif %}
+        {% empty %}
+        <p>Немає друзів для відображення.</p>
+        {% endfor %}
+    </div>
+    <div class="col">
+        <a href="{% url 'add_post'%}" class="btn btn-info">Додати пост</a>
+        <h1>Список постів</h1>
+        {% for da in postets %}
+        <li>
+        <a href="{% url 'post_info' da.id %}">{{da.content}}</a>
+        </li>
+        {% empty %}
+        <p>Немає постів для відображення.</p>
+        {% endfor %}
+        <ul>
+        </ul>
+    </div>
 </div>
-
+</div>
 {% endblock %}
