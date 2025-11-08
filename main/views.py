@@ -89,6 +89,28 @@ def add_friend(request):
             )
     return render(request, 'django_social_logik/add_freind.html', {'profiles': profiles})
 
+def add_friend_request(request):
+    if request.method == "POST":
+        from_user_id = request.user.id
+        to_user_id = request.POST.get("friend_id")
+        to_user = get_object_or_404(Profile, pk=to_user_id)
+        freind_request.objects.create(
+            from_user_id=from_user_id,
+            to_user=to_user
+        )
+    return redirect('add_friend')
+
+def add_subscriber_request(request):
+    if request.method == "POST":
+        from_user_id = request.user
+        to_user_id = request.POST.get("friend_id")
+        to_user = get_object_or_404(Profile, pk=to_user_id)
+        subscribe.objects.create(
+            subscribe= from_user_id,
+            user = to_user 
+        )
+    return redirect('add_friend')
+
 def add_post(request):
     if request.method == "POST":
         content = request.POST.get("content")
