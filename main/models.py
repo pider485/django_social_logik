@@ -69,5 +69,5 @@ class freind_request(models.Model):
     status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('accepted', 'Accepted'), ('rejected', 'Rejected')], default='pending')
 
 class subscribe(models.Model):
-    subscribe = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name='subscribe')
-    user = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name='user')
+    subscribe = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name='subscriptions')
+    user = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name='folowers')

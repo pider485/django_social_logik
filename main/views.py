@@ -79,8 +79,8 @@ def add_friend(request):
         to_user = get_object_or_404(Profile, pk=to_user_id)
         if action == "subscribe":
             subscribe.objects.create(
-                subscribe_id=from_user_id ,
-                user =to_user_id 
+                subscribe= from_user_id,
+                user = to_user_id 
             )
         else:
             freind_request.objects.create(
@@ -135,7 +135,7 @@ def friend_add_to_group(request):
                     group=group,
                     user=friend.user_1
                 )
-            return redirect('friend_add_to_group')
+            return redirect('friend_add_to_group/')
     freinds = Freids.objects.filter(user_1=request.user) | Freids.objects.filter(user_2=request.user)
     return render(request, 'django_social_logik/friend_add_to_group.html', {'freinds': freinds})
 
