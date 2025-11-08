@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} зміна профіля {% endblock %}
+
+{% block content %}
+<form method="POST" action="">
+    {% csrf_token %}
+    <textarea class="form-control" style="width: 30;" name="username" rows="1" cols="50" placeholder="Ім'я">{{ user.username }}</textarea><br>
+    <textarea class="form-control" style="width: 30;" name="email" rows="1" cols="50" placeholder="email">{{ user.email }}</textarea><br>
+    <textarea class="form-control" style="width: 30;" name="description" rows="3" cols="50" placeholder="description">{{ user.description }}</textarea><br>
+    <button type="submit">Зберегти зміни</button> 
+
+{% endblock %}

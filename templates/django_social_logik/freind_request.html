@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Запрошення на дружбу {% endblock %}
+
+{% block content %}
+<a href="{% url 'home' %}" class="btn btn-info">Назад</a>
+<div class="d-flex flex-wrap gap-3">
+    {% for us in requests %}
+    {% if us.status == 'pending' %}
+        
+  
+    <div class="card p-3" style="width: 18rem;">
+        {% if us.avatar %}
+        <img src="{{us.from_user.avatar.url}}" class="card-img-top" alt="..." width="100" height="100">
+        {% else %}
+        <img src="{% static 'img/person-circle.svg' %}" class="card-img-top" alt="..." width="100" height="100">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{us.from_user.username}}</h5>
+            <p class="card-text">{{us.from_user.description}}</p>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="request_id" value="{{ us.id }}">
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-success" name="action" value="accept" type="submit">Прийняти</button>
+                    <button class="btn btn-danger" name="action" value="reject" type="submit">Відхилити</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

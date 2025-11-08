@@ -20,7 +20,14 @@
         <div class="card-body">
             <h5 class="card-title">{{us.username}}</h5>
             <p class="card-text">{{us.description}}</p>
-            <a href="#" class="btn btn-primary">надіслати запрошення</a>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="friend_id" value="{{ us.id }}">
+                <button type="submit" class="btn btn-success mt-2">Додати в друзі</button>
+                <button type="submit" name="action" value="subscribe" class="btn btn-success mt-2">Підписатись</button>
+            </form>
+            <a href="{% url 'profile_check' us.id%}" class="btn btn-info mt-2">Переглянути профіль</a>
+            
         </div>
     </div>
 

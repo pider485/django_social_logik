@@ -27,3 +27,8 @@ class RegisterForm(UserCreationForm):
 
         self.fields['password1'].widget = forms.PasswordInput(attrs={'class': 'form-control mb-2'})
         self.fields['password2'].widget = forms.PasswordInput(attrs={'class': 'form-control mb-2'})
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'avatar', 'description']

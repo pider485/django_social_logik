@@ -22,7 +22,7 @@
         <p class="card-text">Email: {{ user.email }}</p>
         <p class="card-text">Телефон: {{ user.phone }}</p>
         <p class="card-text">Дата народження: {{ user.birth_date }}</p>
-        <button class="btn btn-primary" type="submit">редагувати</button>
+        <a class="btn btn-primary" href="{% url 'edit_profile' %}">редагувати</a>
         <p class="card-text"><small class="text-body-secondary"></small></p>
         <a href="{% url 'home' %}" class="btn btn-info">Назад</a>
       </div>

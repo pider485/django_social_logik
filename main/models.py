@@ -61,3 +61,13 @@ class freind_message(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+class freind_request(models.Model):
+    from_user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='sent_friend_requests')
+    to_user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='received_friend_requests')
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('accepted', 'Accepted'), ('rejected', 'Rejected')], default='pending')
+
+class subscribe(models.Model):
+    subscribe = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name='subscribe')
+    user = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name='user')

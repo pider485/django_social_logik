@@ -9,7 +9,7 @@
             <a href="{% url 'home' %}" class="btn btn-info">Назад</a>
             {% for memb in groupMember %}
             {% if memb.status == "admin" %}
-            <a href="{% url 'friend_add_to_group' %}" class="btn btn-info">Додати нову людину</a>
+            <a href="{% url 'friend_add_to_group'  %}" class="btn btn-info">Додати нову людину</a>
 
             {% endif %}
 

@@ -12,4 +12,7 @@ urlpatterns = [
     path('add_post/', views.add_post, name='add_post'),
     path('add_new_group/', views.add_new_group, name='add_new_group'),
     path('friend_add_to_group/', views.friend_add_to_group, name='friend_add_to_group'),
+    path('edit_profile/', views.edit_profile, name='edit_profile'),
+    path("freind_requests_view/", views.freind_requests_view, name='freind_requests_view'),
+    path("profile_check/<int:us_id>", views.profile_check, name='profile_check'),
 ]

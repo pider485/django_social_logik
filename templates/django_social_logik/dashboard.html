@@ -21,6 +21,7 @@
     </div>
     <div class="col">
         <a href="{% url 'add_friend'%}" class="btn btn-info">Додати друга</a>
+        <a href="{% url 'freind_requests_view'%}" class="btn btn-info">Запрошення на дружбу</a>
         <h1>Список друзів</h1>
         {% for f in freinds %}
         {% if f.user_1 == user %}
