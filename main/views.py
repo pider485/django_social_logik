@@ -7,7 +7,7 @@ from accounts.forms import ProfileForm
 def home(request):
     if not request.user.is_authenticated:
         return render(request, 'django_social_logik/home.html')
-    postets = Postest.objects.all()
+    postets = Postest.objects.order_by('-created_at')[:5]
     freinds = Freids.objects.filter(user_1=request.user) | Freids.objects.filter(user_2=request.user)
     groups = GroupMember.objects.filter(user=request.user)
     profiles = Profile.objects.all()
@@ -220,3 +220,48 @@ def freind_requests_view(request,):
 def profile_check(request,us_id):
     profile = Profile.objects.filter(id=us_id)
     return render(request, "django_social_logik/profile_check.html", {'profile': profile})
+
+def all_post(request, page):
+    like = PostLike.objects.all()
+    dislike = PostDislike.objects.all()
+    if page == 1:
+        postets = Postest.objects.all().order_by('-created_at')[:28]
+        back_page = page
+    else:
+        postets = Postest.objects.all().order_by('-created_at')[(page-1)*28:28*(page)]
+        back_page = page - 1
+    
+    if request.method == "POST":
+        post_id = request.POST.get("post_id")
+        action = request.POST.get("action")
+        post = get_object_or_404(Postest, pk=post_id)
+        if action == "like":
+            if like.filter(user=request.user, post=post).exists():
+                PostLike.objects.filter(user=request.user, post=post).delete()
+                return redirect('all_post')
+            else:
+                print("like")
+                PostLike.objects.create(
+                    user=request.user,
+                    post=post
+                )
+                try:
+                    PostDislike.objects.get(user=request.user, post=post).delete()
+                except PostDislike.DoesNotExist:
+                    pass
+                return redirect('all_post')
+        elif action == "dislike":
+            if dislike.filter(user=request.user, post=post).exists():
+                PostDislike.objects.filter(user=request.user, post=post).delete()
+                return redirect('all_post')
+            print("dislike")
+            PostDislike.objects.create(
+                user=request.user,
+                post=post
+            )
+            try:
+                PostLike.objects.get(user=request.user, post=post).delete()
+            except PostLike.DoesNotExist:
+                pass
+            return redirect('all_post')
+    return render(request, 'django_social_logik/all_post.html', {'postets': postets, 'next_page': page + 1, 'back_page': back_page, 'like': like, 'dislike': dislike})

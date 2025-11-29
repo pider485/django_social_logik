@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %} Пости {% endblock %}
+{% block content %}
+
+<div class="d-flex flex-wrap gap-3">
+    {% for da in postets %}
+
+
+    <div class="card p-3" style="width: 18rem;">
+        {% if da.img %}
+        <img src="{{da.img.url}}" class="card-img-top" alt="...">
+        {% else %}
+        <img src="" class="card-img-top" alt="...">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{da.user.username}}</h5>
+            <p class="card-text">{{da.content}}</p>
+            <a href="{% url 'post_info' da.id %}" class="btn btn-primary">Переглянути детально</a>
+            <form method="post">
+                {% csrf_token %}
+                <div class="d-grid gap-2 d-md-block">
+                    <input type="hidden" name="post_id" value="{{ da.id }}">
+                    <button class="btn btn-success" type="submit" name="action" value="like">ㅤ👍ㅤ</button>
+                    <button class="btn btn-danger" type="submit" name="action" value="dislike">ㅤ👎ㅤ </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="{% url 'all_post' back_page%}">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="{% url 'all_post' next_page%}">Next</a></li>
+        </ul>
+    </nav>
+</div>
+
+{% endblock %}

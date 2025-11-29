@@ -17,4 +17,5 @@ urlpatterns = [
     path("profile_check/<int:us_id>", views.profile_check, name='profile_check'),
     path("add_friend_request/", views.add_friend_request, name='add_friend_request'),
     path("add_subscriber_request/", views.add_subscriber_request, name='add_subscriber_request'),
+    path("all_post/<int:page>", views.all_post, name='all_post'),
 ]

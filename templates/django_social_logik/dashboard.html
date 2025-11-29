@@ -39,6 +39,7 @@
     </div>
     <div class="col">
         <a href="{% url 'add_post'%}" class="btn btn-info">Додати пост</a>
+        <a href="{% url 'all_post' 1%}" class="btn btn-info">перглянути всі пости</a>
         <h1>Список постів</h1>
         {% for da in postets %}
         <div class="card" style="width: 18rem;">
