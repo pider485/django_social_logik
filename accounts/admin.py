@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Profile
-from main.models import Message, Group, GroupMember, Chat, Chat_message, Blocked, GroupMessage, Postest, Freids, freind_message
+from main.models import Message, Group, GroupMember, Chat, Chat_message, Blocked, GroupMessage, Postest, Freids, freind_message, PostLike, PostDislike
 
 # Register your models here.
 admin.site.register(Profile)
@@ -37,3 +37,13 @@ class freind_messageAdmin(admin.ModelAdmin):
     list_display = ('freind', 'user', 'created_at')
     search_fields = ('freind__user_1__user__username', 'freind__user_2__user__username', 'user__user__username', 'content')
 admin.site.register(freind_message, freind_messageAdmin)
+
+class postlikeAdmin(admin.ModelAdmin):
+    list_display = ('post', 'user')
+    search_fields = ('post__id', 'user__user__username')
+admin.site.register(PostLike, postlikeAdmin)
+
+class PostDislikeadmin(admin.ModelAdmin):
+    list_display = ('post', 'user')
+    search_fields = ('post__id', 'user__user__username')
+admin.site.register(PostDislike, PostDislikeadmin)

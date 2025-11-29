@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from main.models import Group, GroupMessage, GroupMember, Freids, Postest , freind_message, Profile, freind_request, subscribe
+from main.models import Group, GroupMessage, GroupMember, Freids, Postest , freind_message, Profile, freind_request, subscribe, PostLike, PostDislike
 from django.shortcuts import get_object_or_404, redirect
 from accounts.forms import ProfileForm
 # Create your views here.
@@ -11,11 +11,48 @@ def home(request):
     freinds = Freids.objects.filter(user_1=request.user) | Freids.objects.filter(user_2=request.user)
     groups = GroupMember.objects.filter(user=request.user)
     profiles = Profile.objects.all()
-    context = {'groups': groups
-               , 'freinds': freinds
-               , 'postets': postets,
-                'profiles': profiles
+    like = PostLike.objects.all()
+    dislike = PostDislike.objects.all()
+    context = {'groups': groups,
+                'freinds': freinds,
+                'postets': postets,
+                'profiles': profiles,
+                 'like': like,
+                 'duislike': dislike,
                }
+    if request.method == "POST":
+        post_id = request.POST.get("post_id")
+        action = request.POST.get("action")
+        post = get_object_or_404(Postest, pk=post_id)
+        if action == "like":
+            if like.filter(user=request.user, post=post).exists():
+                PostLike.objects.filter(user=request.user, post=post).delete()
+                return redirect('home')
+            else:
+                print("like")
+                PostLike.objects.create(
+                    user=request.user,
+                    post=post
+                )
+                try:
+                    PostDislike.objects.get(user=request.user, post=post).delete()
+                except PostDislike.DoesNotExist:
+                    pass
+                return redirect('home')
+        elif action == "dislike":
+            if dislike.filter(user=request.user, post=post).exists():
+                PostDislike.objects.filter(user=request.user, post=post).delete()
+                return redirect('home')
+            print("dislike")
+            PostDislike.objects.create(
+                user=request.user,
+                post=post
+            )
+            try:
+                PostLike.objects.get(user=request.user, post=post).delete()
+            except PostLike.DoesNotExist:
+                pass
+            return redirect('home')
     return render(request, 'django_social_logik/dashboard.html', context)
 
 

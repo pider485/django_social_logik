@@ -41,9 +41,28 @@
         <a href="{% url 'add_post'%}" class="btn btn-info">Додати пост</a>
         <h1>Список постів</h1>
         {% for da in postets %}
-        <li>
-        <a href="{% url 'post_info' da.id %}">{{da.content}}</a>
-        </li>
+        <div class="card" style="width: 18rem;">
+            {% if da.img %}
+            <img src="{{da.img.url}}" class="card-img-top" alt="...">
+            {% else %}
+            <img src="" class="card-img-top" alt="...">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{da.user.username}}</h5>
+                <p class="card-text">{{da.content}}</p>
+                <a href="{% url 'post_info' da.id %}" class="btn btn-primary">Переглянути детально</a>
+
+                <input type="hidden" name="request_id" value="{{ us.id }}">
+                <p class="card-text">Лайки: {{ da.likes.count }}</p>
+                <p class="card-text">Дизлайки: {{ da.dislikes.count }}</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="post_id" value="{{ da.id }}">
+                    <button class="btn btn-success" type="submit" name="action" value="like">ㅤ👍ㅤ</button>
+                    <button class="btn btn-danger" type="submit" name="action" value="dislike">ㅤ👎ㅤ </button>
+                </form>
+            </div>
+        </div>
         {% empty %}
         <p>Немає постів для відображення.</p>
         {% endfor %}

@@ -71,3 +71,13 @@ class freind_request(models.Model):
 class subscribe(models.Model):
     subscribe = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name='subscriptions')
     user = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name='folowers')
+
+class PostLike(models.Model):
+    post = models.ForeignKey(Postest, on_delete=models.CASCADE, related_name='likes')
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class PostDislike(models.Model):
+    post = models.ForeignKey(Postest, on_delete=models.CASCADE, related_name='dislikes')
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
